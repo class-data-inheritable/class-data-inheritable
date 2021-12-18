@@ -1,0 +1,132 @@
+=pod
+
+=head1 Ì¾Á°
+
+Class::Data::Inheritable - ·Ñ¾µ²ÄÇ½¤Ê, ¥ª¡¼¥Ð¡¼¥é¥¤¥É²ÄÇ½¤Ê¡¢¥¯¥é¥¹¥Ç¡¼¥¿
+
+=head1 ³µÍ×
+
+  package Stuff;
+  use base qw(Class::Data::Inheritable);
+
+  # DataFile¤ò¡¢·Ñ¾µ²ÄÇ½¤Ê¥¯¥é¥¹¥Ç¡¼¥¿¤È¤·¤Æ¥»¥Ã¥È¥¢¥Ã¥×¤¹¤ë¡£
+  Stuff->mk_classdata('DataFile');
+
+  # ¤³¤Î¥¯¥é¥¹¤¿¤á¤Ë¥Ç¡¼¥¿¥Õ¥¡¥¤¥ë¤Î¾ì½ê¤òÀë¸À¤¹¤ë¡£
+  Stuff->DataFile('/etc/stuff/data');
+  
+
+	Stuff->mk_classdata(DataFile => '/etc/stuff/data');
+
+=head1 ³µÍ×
+
+Class::Data::Inheritable ¤Ï¡¢¥¯¥é¥¹¥Ç¡¼¥¿¤Î¥¢¥¯¥»¥µ/¥ß¥å¡¼¥Æ¡¼¥¿¤òºî¤ë¤Î¤Ë¸þ¤¤¤Æ¤¤¤Þ¤¹¡£
+¤Ä¤Þ¤ê¡¢(Ã±°ì¤Î¥ª¥Ö¥¸¥§¥¯¥È¤È¤Ï°ã¤Ã¤Æ¡¢)¥¯¥é¥¹Á´ÂÎ¤Ë²¿¤«¤òÃß¤¨¤¿¤¤¾ì¹ç¤Ç¤¹¡£
+¤³¤Î¥Ç¡¼¥¿¤Ï¡¢¥µ¥Ö¥¯¥é¥¹¤Ç·Ñ¾µ¤µ¤ìÆÀ¤Þ¤¹¤·¡¢¥ª¡¼¥Ð¡¼¥é¥¤¥É¤µ¤ìÆÀ¤Þ¤¹¡£
+
+Îã:
+
+  Pere::Ubu->mk_classdata('Suitcase');
+
+¤³¤ì¤Ï¡¢Suitcate ¥á¥½¥Ã¥É¤ò¡¢Pere::Ubu ¥¯¥é¥¹¤ËÀ¸À®¤·¤Þ¤¹¡£
+
+¿·¤·¤¤¥á¥½¥Ã¥É¤Ï¡¢¥¯¥é¥¹¥Ç¡¼¥¿¤Î°ì¤Ä¤òÆÀ¤¿¤ê¡¢¥»¥Ã¥È¤¹¤ë¤Î¤Ë¡¢»È¤ï¤ìÆÀ¤Þ¤¹¡£
+
+  Pere::Ubu->Suitcase('Red');
+  $suitcase = Pere::Ubu->Suitcase;
+
+ÌÌÇò¤¤ÉôÊ¬¤¬¡¢¥¯¥é¥¹¤¬ Pere::Ubu ¤«¤é·Ñ¾µ¤¹¤ë¤È¤­¤Ëµ¯¤³¤ê¤Þ¤¹¡§
+
+  package Raygun;
+  use base qw(Pere::Ubu);
+  
+  # Raygun¤Î¥¹¡¼¥Ä¥±¡¼¥¹¤Ï Red.
+  $suitcase = Raygun->Suitcase;
+
+Raygun ¤Ï¡¢Pere::Ubu¤«¤é¥¹¡¼¥Ä¥±¡¼¥¹¥¯¥é¥¹¥Ç¡¼¥¿·Ñ¾µ¤·¤Þ¤¹¡£
+
+¥¯¥é¥¹¥Ç¡¼¥¿¤Î·Ñ¾µ¤Ï¡¢¥á¥½¥Ã¥É·Ñ¾µ¤Ëanalgous¤òÆ°¤«¤·¤Þ¤¹¡£
+Raygun¤¬¡¢·Ñ¾µ¤µ¤ì¤¿¥¯¥é¥¹¥Ç¡¼¥¿¤ò(Suitcase()¤ò»È¤Ã¤Æ¡¢¿·¤·¤¤ÃÍ¤ò¥»¥Ã¥È¤¹¤ë¤³¤È¤Ë¤è¤Ã¤Æ)"¥ª¡¼¥Ð¡¼¥é¥¤¥É"¤·¤Ê¤¤¤«¤®¤ê¡¢
+Pere::Ubu ¤Ç¡¢¥»¥Ã¥È¤µ¤ì¤¿¤â¤Î¤ò¤Ê¤ó¤Ç¤â»È¤¤Â³¤±¡¢°ÊÁ°¤ÎÊÑ¹¹¤ò·Ñ¾µ¤·Â³¤±¤Þ¤¹¡£
+
+  # Raygun ¤È Pere::Ubu ¤Î suitcases ¤Ï¡¢º£¤Ï Blue ¤Ç¤¹¡£
+  Pere::Ubu->Suitcase('Blue');
+
+¤·¤«¤·¡¢Raygun ¤¬¡¢¼«Ê¬¼«¿È¤ÎSuitcase() ¤ò¥»¥Ã¥È¤¹¤ë¤Ù¤­¤À¤È·è¤á¤ë¤È¡¢
+Suitcase() ¤Ï¡¢ º£¤ä¡¢Pare::Ubu ¤ò"¥ª¡¼¥Ð¡¼¥é¥¤¥É"¤·¤Æ¤ª¤ê¡¢Raygun ¼«¿È¤Î¤â¤Î¤Ç¤¹¡£
+¥ª¡¼¥Ð¡¼¥é¥¤¥É¤µ¤ì¤¿¥á¥½¥Ã¥É¤Ë¤Á¤ç¤¦¤É¡¢»÷¤Æ¤¤¤Þ¤¹¡£
+
+  # Raygun ¤Ï orange ¤Î¥¹¡¼¥Ä¥±¡¼¥¹¤ò»ý¤Ä¤¬¡¢Pere::Ubu ¤Î¥¹¡¼¥Ä¥±¡¼¥¹¤Ï¡¢¤Þ¤À Blue ¤Ç¤¹.
+  Raygun->Suitcase('Orange');
+
+¤µ¤Æ¡¢Raygun ¤Ï¡¢Pare::Ubu ¤ò¥ª¡¼¥Ð¡¼¥é¥¤¥É¤·¤¿¤Î¤Ç¡¢Pare::Ubu ¤Ë¤è¤ë¡¢°ÊÁ°¤ÎÊÑ¹¹¤Ï
+¤Þ¤Ã¤¿¤¯ Raygun ¤Ë¤Ï¡¢±Æ¶Á¤òÍ¿¤¨¤Þ¤»¤ó¡£
+
+  # Raygun ¤Ï¡¢¤Þ¤À¡¢orange ¤Î¥¹¡¼¥Ä¥±¡¼¥¹¤Ç¤¹¤¬¡¢ Pere::Ubu ¤Ï¡¢Samsonite ¤ò»È¤¤¤Þ¤¹¡£
+  Pere::Ubu->Suitcase('Samsonite');
+
+
+=head1 ¥á¥½¥Ã¥É
+
+=head2 B<mk_classdata>
+
+  Class->mk_classdata($data_accessor_name);
+  Class->mk_classdata($data_accessor_name => $value);
+
+¤³¤ì¤Ï¥¯¥é¥¹¥á¥½¥Ã¥É¤Ç¡¢¿·¤·¤¤¥¯¥é¥¹¥Ç¡¼¥¿¤Î¥¢¥¯¥»¥µ¤òÀë¸À¤¹¤ë¤Î¤Ë»È¤ï¤ì¤Þ¤¹¡£
+$data_accessor_name ¤òÌ¾Á°¤Ë»È¤Ã¤Æ¡¢¿·¤·¤¤¥¢¥¯¥»¥µ¤¬¥¯¥é¥¹Æâ¤Ëºî¤é¤ì¤Þ¤¹¡£
+
+¥ª¡¼¥Ð¡¼¥é¥¤¥É¤òÍÆ°×¤Ë¤¹¤ë¤¿¤á¤Ë¡¢mk_classdata ¤Ï¡¢¥¢¥¯¥»¥µ¤Ø¤Î¥¨¥¤¥ê¥¢¥¹ _field_accessor() ¤òºî¤ê¤Þ¤¹¡£
+¤½¤ì¤Ç¡¢Suitcase() ¤Ë¤Ï¡¢_Suitcase_accessor() ¤È¤¤¤¦¥¨¥¤¥ê¥¢¥¹¤¬¤¢¤ê¡¢
+¤³¤Î¥¨¥¤¥ê¥¢¥¹¤Ï¡¢Suitcase() ¤È¡¢¤Á¤ç¤¦¤ÉÆ±¤¸¤³¤È¤ò¤·¤Þ¤¹¡£
+Ã±°ì¤Î¥¢¥¯¥»¥µ¤Î¿¶¤ëÉñ¤¤¤òÊÑ¤¨¤è¤¦¤È¤·¤Æ¡¢
+¤Þ¤À¡¢·Ñ¾µ²ÄÇ½¤Ê¥¯¥é¥¹¥Ç¡¼¥¿¤Î²¸·Ã¤òÆÀ¤¿¤¤¤Ê¤é¡¢Í­±×¤Ç¤¹¡£¼¡¤ÎÎã¤Î¤è¤¦¤Ë¡£
+
+  sub Suitcase {
+      my($self) = shift;
+      warn "Fashion tragedy" if @_ and $_[0] eq 'Plaid';
+
+      $self->_Suitcase_accessor(@_);
+  }
+
+=head1 Ãøºî¸¢
+
+(¸¶Ê¸¤Þ¤Þ)
+
+Copyright (c) 2000, Damian Conway and Michael G Schwern. All
+Rights Reserved.  This module is free software. It may be used,
+redistributed and/or modified under the terms of the Perl Artistic
+License (see http://www.perl.com/perl/misc/Artistic.html)
+
+
+=head1 Ãø¼Ô
+
+(¸¶Ê¸¤Þ¤Þ)
+
+Original code by Damian Conway.
+
+Maintained by Michael G Schwern <schwern@pobox.com> until September
+2005.
+
+Now maintained by Tony Bowden.
+
+=head1 BUGS and QUERIES
+
+Please direct all correspondence regarding this module to:
+bug-Class-Data-Inheritable@rt.cpan.org
+
+=head1 SEE ALSO
+
+L<perltootc> ¤Ï¡¢¤È¤Æ¤âÆþÇ°¤ÊPerl¤Î¥¯¥é¥¹¥Ç¡¼¥¿¤Ë¤Ä¤¤¤Æ¤ÎµÄÏÀ¤¬¤¢¤ê¤Þ¤¹¡£
+
+=head1 ËÝÌõ¤Ë¤Ä¤¤¤Æ
+
+ËÝÌõ¼Ô¡§²ÃÆ£ÆØ (atusi@pure.ne.jp)
+
+Perl¥É¥­¥å¥á¥ó¥ÈÆüËÜ¸ìÌõ Project ¤Ë¤Æ¡¢
+Perl¥â¥¸¥å¡¼¥ë¡¢¥É¥­¥å¥á¥ó¥È¤ÎËÝÌõ¤ò¹Ô¤Ã¤Æ¤ª¤ê¤Þ¤¹¡£
+
+ http://sourceforge.jp/projects/perldocjp/
+ http://freeml.com/ctrl/html/MLInfoForm/perldocjp@freeml.com
+ http://www.perldoc.jp
+

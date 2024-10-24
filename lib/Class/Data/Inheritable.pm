@@ -1,7 +1,7 @@
 package Class::Data::Inheritable;
 
 use strict qw(vars subs);
-our $VERSION = '0.09';
+our $VERSION = '0.10';
 
 sub mk_classdata {
     my ($declaredclass, $attribute, $data) = @_;
